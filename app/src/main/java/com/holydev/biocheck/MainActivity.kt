@@ -4,16 +4,18 @@ import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
@@ -25,8 +27,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.holydev.biocheck.databinding.ActivityMainBinding
 import java.io.File
-import java.lang.Exception
 import kotlin.math.abs
+
 
 class MainActivity : AppCompatActivity() {
     private val mainBinding: ActivityMainBinding by lazy {
@@ -59,9 +61,9 @@ class MainActivity : AppCompatActivity() {
             startCamera()
         }
 
-        mainBinding.captureIB.setOnClickListener {
-            takePhoto()
-        }
+//        mainBinding.captureIB.setOnClickListener {
+//            takePhoto()
+//        }
 
         mainBinding.flipCameraIB.setOnClickListener {
             lensFacing = if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
@@ -194,11 +196,20 @@ class MainActivity : AppCompatActivity() {
             .requireLensFacing(lensFacing)
             .build()
 
+        val imageAnalysis = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .setResolutionSelector(resolutionSelector)
+            .setOutputImageFormat(OUTPUT_IMAGE_FORMAT_YUV_420_888)
+            .setTargetRotation(rotation)
+            .build()
+
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), RealTimeAnalyzer(this@MainActivity));
+
         try {
             cameraProvider.unbindAll()
 
             camera = cameraProvider.bindToLifecycle(
-                this, cameraSelector, preview, imageCapture
+                this, cameraSelector, preview, imageCapture, imageAnalysis
             )
         } catch (e: Exception) {
             e.printStackTrace()

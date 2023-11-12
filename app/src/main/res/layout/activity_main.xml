@@ -10,9 +10,24 @@
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"></androidx.camera.view.PreviewView>
 
-    <ImageButton
+    <TextView
+        android:id="@+id/attackStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:background="#2196F3"
+        android:text="@string/astatus"
+        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--<ImageButton
         android:id="@+id/captureIB"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -26,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/white" />-->
 
     <ImageButton
         android:id="@+id/flipCameraIB"
@@ -39,6 +54,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white"
-        android:contentDescription="flip" />
+        android:contentDescription="@string/flip" />
 
 </RelativeLayout>
