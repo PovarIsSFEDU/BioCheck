@@ -47,4 +47,7 @@
     <string name="astatus">Статус атаки</string>
     <string name="attack">АТАКА</string>
     <string name="no_attack">НЕТ АТАКИ</string>
+    <string name="mask_description">Bitmap mask for FaceMesh</string>
+    <string name="polygons">Polygons</string>
+    <string name="dots">Dots</string>
 </resources>

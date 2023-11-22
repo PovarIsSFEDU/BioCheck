@@ -59,7 +59,9 @@ dependencies {
     // If you want to additionally use the CameraX View class
     implementation("androidx.camera:camera-view:${camerax_version}")
     implementation ("com.google.mlkit:face-mesh-detection:16.0.0-beta1")
-
+    implementation ("org.pytorch:pytorch_android:1.13.1")
+    implementation ("org.pytorch:pytorch_android_torchvision:1.13.1")
+    implementation ("com.google.code.gson:gson:2.8.7")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

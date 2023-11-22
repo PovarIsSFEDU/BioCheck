@@ -10,7 +10,16 @@
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"></androidx.camera.view.PreviewView>
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/MeshMask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/mask_description"
+            android:visibility="visible" />
+    </androidx.camera.view.PreviewView>
 
     <TextView
         android:id="@+id/attackStatus"
@@ -21,27 +30,22 @@
         android:layout_marginBottom="30dp"
         android:background="#2196F3"
         android:text="@string/astatus"
-        android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!--<ImageButton
-        android:id="@+id/captureIB"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="start photo/video"
-        android:scaleType="centerCrop"
-        android:src="@drawable/camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/white" />-->
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/polygons"
+        android:textColor="@color/white"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flipCameraIB" />
 
     <ImageButton
         android:id="@+id/flipCameraIB"
@@ -49,11 +53,11 @@
         android:layout_height="40dp"
         android:layout_margin="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/flip"
         android:scaleType="centerCrop"
         android:src="@drawable/flip_camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white"
-        android:contentDescription="@string/flip" />
+        app:tint="@color/white" />
 
 </RelativeLayout>

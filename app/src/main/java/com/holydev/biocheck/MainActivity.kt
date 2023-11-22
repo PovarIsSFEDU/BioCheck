@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -52,6 +53,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var camera: Camera
     private lateinit var cameraSelector: CameraSelector
     private var lensFacing = CameraSelector.LENS_FACING_BACK
+    private var flipNeeded = false
+    private var modeChanger = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,18 +64,27 @@ class MainActivity : AppCompatActivity() {
             startCamera()
         }
 
-//        mainBinding.captureIB.setOnClickListener {
-//            takePhoto()
-//        }
+
+
 
         mainBinding.flipCameraIB.setOnClickListener {
-            lensFacing = if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
-                CameraSelector.LENS_FACING_BACK
+            if (lensFacing == CameraSelector.LENS_FACING_FRONT) {
+                lensFacing = CameraSelector.LENS_FACING_BACK
+                flipNeeded = false
             } else {
-                CameraSelector.LENS_FACING_FRONT
+                lensFacing = CameraSelector.LENS_FACING_FRONT
+                flipNeeded = true
             }
             bindCameraUserFaces()
         }
+
+//        mainBinding.switch1.setOnCheckedChangeListener { _, isChecked ->
+//            if(isChecked){
+//                modeChanger = 2
+//            }else{
+//                modeChanger = 1
+//            }
+//        }
 
     }
 
@@ -203,7 +215,10 @@ class MainActivity : AppCompatActivity() {
             .setTargetRotation(rotation)
             .build()
 
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), RealTimeAnalyzer(this@MainActivity));
+        imageAnalysis.setAnalyzer(
+            ContextCompat.getMainExecutor(this),
+            RealTimeAnalyzer(this@MainActivity)
+        );
 
         try {
             cameraProvider.unbindAll()
@@ -229,33 +244,6 @@ class MainActivity : AppCompatActivity() {
         val contentValues = ContentValues()
         contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, timestamp)
         contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-
-        /*imageCapture.takePicture(
-            OutputFileOptions.Builder(
-                contentResolver,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues
-            ).build(),
-            ContextCompat.getMainExecutor(this),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val message = "Photo capture success!"
-                    Toast.makeText(
-                        this@MainActivity,
-                        message,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-                override fun onError(exception: ImageCaptureException) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        exception.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-        )*/
 
 
         imageCapture.takePicture(
@@ -285,5 +273,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    fun getFlipper(): Boolean {
+        return flipNeeded
+    }
+
+    fun getModeltype(): Int {
+        return modeChanger
+    }
+
+    fun getMask(): ImageView {
+        return mainBinding.MeshMask
     }
 }
